@@ -5,14 +5,14 @@ The provided sample projects offer a concise yet effective demonstration of the 
 IPWorks Auth 2022 libraries for the corresponding edition are required to run these samples.  Free download from: [https://www.nsoftware.com/ipworksauth](https://www.nsoftware.com/ipworksauth)
 
 ## Reference Documentation
-[Java](https://cdn.nsoftware.com/help/IAH/java/)
-[Javascript](https://cdn.nsoftware.com/help/IAH/js/)
-[.NET](https://cdn.nsoftware.com/help/IAH/cs/)
-[Python](https://cdn.nsoftware.com/help/IAH/py/)
-[PHP](https://cdn.nsoftware.com/help/IAH/php/)
-[C++](https://cdn.nsoftware.com/help/IAH/cpp/)
-[macOS](https://cdn.nsoftware.com/help/IAH/mac/)
-[iOS](https://cdn.nsoftware.com/help/IAH/mac/)
+* [Java Edition](https://cdn.nsoftware.com/help/IAH/java/)
+* [Javascript Edition](https://cdn.nsoftware.com/help/IAH/js/)
+* [.NET Edition](https://cdn.nsoftware.com/help/IAH/cs/)
+* [Python Edition](https://cdn.nsoftware.com/help/IAH/py/)
+* [PHP Edition](https://cdn.nsoftware.com/help/IAH/php/)
+* [C++ Edition](https://cdn.nsoftware.com/help/IAH/cpp/)
+* [macOS Edition](https://cdn.nsoftware.com/help/IAH/mac/)
+* [iOS Edition](https://cdn.nsoftware.com/help/IAH/mac/)
 
 ## Sample Projects
 | Sample Project | Description |
