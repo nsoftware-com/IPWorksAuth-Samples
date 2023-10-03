@@ -6,11 +6,12 @@ IPWorks Auth 2022 libraries for the corresponding edition are required to run th
 
 ## Reference Documentation
 * [Java Edition](https://cdn.nsoftware.com/help/IAH/java/)
-* [Javascript Edition](https://cdn.nsoftware.com/help/IAH/js/)
 * [.NET Edition](https://cdn.nsoftware.com/help/IAH/cs/)
+* [JavaScript Edition](https://cdn.nsoftware.com/help/IAH/js/)
 * [Python Edition](https://cdn.nsoftware.com/help/IAH/py/)
 * [PHP Edition](https://cdn.nsoftware.com/help/IAH/php/)
 * [C++ Edition](https://cdn.nsoftware.com/help/IAH/cpp/)
+* [Delphi Edition](https://cdn.nsoftware.com/help/IAH/dlp/)
 * [macOS Edition](https://cdn.nsoftware.com/help/IAH/mac/)
 * [iOS Edition](https://cdn.nsoftware.com/help/IAH/mac/)
 
