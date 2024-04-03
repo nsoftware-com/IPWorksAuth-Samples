@@ -8,7 +8,7 @@
   "main": "hotp.js",
   "dependencies": {
     "full-icu": "*",
-    "ipworksauth": "^22.0.8676"
+    "ipworksauth": "^22.0.8858"
   },
   "scripts": {
     "hotp": "node hotp.js"
