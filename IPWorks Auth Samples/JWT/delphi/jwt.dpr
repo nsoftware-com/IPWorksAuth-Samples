@@ -1,5 +1,5 @@
 (*
- * IPWorks Auth 2022 Delphi Edition - Sample Project
+ * IPWorks Auth 2024 Delphi Edition - Sample Project
  *
  * This sample project demonstrates the usage of IPWorks Auth in a 
  * simple, straightforward way. It is not intended to be a complete 

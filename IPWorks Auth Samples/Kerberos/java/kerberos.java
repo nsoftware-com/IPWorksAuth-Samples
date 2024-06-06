@@ -1,5 +1,5 @@
 /*
- * IPWorks Auth 2022 Java Edition - Sample Project
+ * IPWorks Auth 2024 Java Edition - Sample Project
  *
  * This sample project demonstrates the usage of IPWorks Auth in a 
  * simple, straightforward way. It is not intended to be a complete 
@@ -19,7 +19,7 @@ public class kerberos extends ConsoleDemo {
 	public static void main(String[] args) {
 		Kerberos kerberos = new Kerberos();
 		try {
-			System.out.println("This demo shows hpw to use the Kerberos component to authenticate a user. \n" 
+			System.out.println("This demo shows how to use the Kerberos component to authenticate a user. \n" 
 					+ "To begin specify the User, Password, SPN (Service Principal Name), and KDCHost (the Kerberos server).\n");
 			
 			kerberos.setUser(prompt("Please enter your User", ":"));
@@ -57,15 +57,13 @@ class ConsoleDemo {
     System.out.print(label + punctuation + " ");
     return input();
   }
-
-  static String prompt(String label, String punctuation, String defaultVal)
-  {
-	System.out.print(label + " [" + defaultVal + "] " + punctuation + " ");
-	String response = input();
-	if(response.equals(""))
-		return defaultVal;
-	else
-		return response;
+  static String prompt(String label, String punctuation, String defaultVal) {
+      System.out.print(label + " [" + defaultVal + "] " + punctuation + " ");
+      String response = input();
+      if (response.equals(""))
+        return defaultVal;
+      else
+        return response;
   }
 
   static char ask(String label) {

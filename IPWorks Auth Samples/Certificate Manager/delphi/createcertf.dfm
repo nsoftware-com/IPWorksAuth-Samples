@@ -4,7 +4,7 @@ object FormCreatecert: TFormCreatecert
   BorderStyle = bsDialog
   Caption = 'Create Certificate'
   ClientHeight = 293
-  ClientWidth = 425
+  ClientWidth = 415
   Color = clBtnFace
   Constraints.MaxWidth = 431
   Constraints.MinHeight = 300
@@ -14,13 +14,12 @@ object FormCreatecert: TFormCreatecert
   Font.Height = -11
   Font.Name = 'MS Sans Serif'
   Font.Style = []
-  OldCreateOrder = False
   Position = poOwnerFormCenter
   OnActivate = FormActivate
-  DesignSize = (
-    425
-    293)
   PixelsPerInch = 96
+  DesignSize = (
+    415
+    293)
   TextHeight = 13
   object Label1: TLabel
     Left = 16
@@ -122,10 +121,11 @@ object FormCreatecert: TFormCreatecert
     TabOrder = 4
     Text = '0'
   end
-  object ipwCertMgr1: TipwCertMgr
+  object ipaCertMgr1: TipaCertMgr
     CertStore = 'MY'
-    OnCertList = ipwCertMgr1CertList
-    Left = 216
+    ExportFormat = 'PFX'
+    OnCertList = ipaCertMgr1CertList
+    Left = 256
     Top = 72
   end
 end

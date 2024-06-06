@@ -19,15 +19,15 @@ type
     Label2: TLabel;
     tSerialNumber: TEdit;
     Label4: TLabel;
-    ipwCertMgr1: TipaCertMgr;
+    ipaCertMgr1: TipaCertMgr;
     procedure bSignClick(Sender: TObject);
     procedure bOKClick(Sender: TObject);
     procedure bCancelClick(Sender: TObject);
     procedure tSerialNumberChange(Sender: TObject);
     procedure FormActivate(Sender: TObject);
-    procedure ipwCertMgr1CertList(Sender: TObject; CertEncoded: string; CertEncodedB: TArray<System.Byte>;
-      const CertSubject, CertIssuer, CertSerialNumber: string;
-      HasPrivateKey: Boolean);
+    procedure ipaCertMgr1CertList(Sender: TObject; const CertEncoded: string;
+      const CertEncodedB: TArray<System.Byte>; const CertSubject, CertIssuer,
+      CertSerialNumber: string; const HasPrivateKey: Boolean);
   private
     { Private declarations }
   public
@@ -41,17 +41,18 @@ implementation
 
 {$R *.dfm}
 
-procedure TFormSigncsr.ipwCertMgr1CertList(Sender: TObject; CertEncoded: string; CertEncodedB: TArray<System.Byte>;
-  const CertSubject, CertIssuer, CertSerialNumber: String;
-  HasPrivateKey: Boolean);
+procedure TFormSigncsr.ipaCertMgr1CertList(Sender: TObject;
+  const CertEncoded: string; const CertEncodedB: TArray<System.Byte>;
+  const CertSubject, CertIssuer, CertSerialNumber: string;
+  const HasPrivateKey: Boolean);
 begin
   if HasPrivateKey then cbIssuer.Items.Add(CertSubject);
 end;
 
 procedure TFormSigncsr.bSignClick(Sender: TObject);
 begin
-  ipwCertMgr1.CertSubject := cbIssuer.Text;
-  tSignedCSR.Text := ipwCertMgr1.signcsr(TEncoding.Default.GetBytes(tCSR.Text), StrToInt(tSerialNumber.Text))
+  ipaCertMgr1.CertSubject := cbIssuer.Text;
+  tSignedCSR.Text := ipaCertMgr1.signcsr(TEncoding.Default.GetBytes(tCSR.Text), StrToInt(tSerialNumber.Text))
 end;
 
 procedure TFormSigncsr.bOKClick(Sender: TObject);
@@ -80,7 +81,7 @@ procedure TFormSigncsr.FormActivate(Sender: TObject);
 begin
   tSerialNumber.Text := IntToStr(StrToInt(tSerialNumber.Text) + 1);
   cbIssuer.items.Clear;
-  ipwCertMgr1.ListStoreCertificates;
+  ipaCertMgr1.ListStoreCertificates;
   cbIssuer.ItemIndex := 0;
 end;
 

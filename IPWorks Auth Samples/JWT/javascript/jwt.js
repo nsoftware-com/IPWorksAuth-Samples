@@ -1,5 +1,5 @@
 /*
- * IPWorks Auth 2022 JavaScript Edition - Sample Project
+ * IPWorks Auth 2024 JavaScript Edition - Sample Project
  *
  * This sample project demonstrates the usage of IPWorks Auth in a 
  * simple, straightforward way. It is not intended to be a complete 
@@ -24,11 +24,14 @@ let rl = readline.createInterface({
   output: process.stdout
 });
 
+'use strict';
+// tslint:disable no-console no-var-keyword
+import * as ipworksauth from "@nsoftware/ipworksauth";// import the public Product wrappers
 
 const key_256 = "txAVam2uGT20a+ZJC1VWVGCM8tFYSKyJlw+2fgS/BdA=";
-const key_384 ="5C/iq/SVHc1i++8elF0u3Cg8w1D1Nj8Idrsw2zzIQeLrolmPk5d26f6MxTE3Npy2";
-const key_512 ="AGVJSwvgVMU0cspZ7ChlxURcgCcdj7QV6nm0fr0C/rNtuh8F5uA7nCs4efKuWUDBw7/s9ikfTm0Kx4uZ3SYXcA==";
-const password = "test"
+const key_384 = "5C/iq/SVHc1i++8elF0u3Cg8w1D1Nj8Idrsw2zzIQeLrolmPk5d26f6MxTE3Npy2";
+const key_512 = "AGVJSwvgVMU0cspZ7ChlxURcgCcdj7QV6nm0fr0C/rNtuh8F5uA7nCs4efKuWUDBw7/s9ikfTm0Kx4uZ3SYXcA==";
+const password = "test";
 
 main();
 
@@ -51,21 +54,19 @@ async function main() {
 
   const jwt = new ipworksauth.jwt();
 
-  if (process.argv[2] == "create"){
-    jwt.reset();
+  if (process.argv[2] === "create") {
+    await jwt.reset();
 
-    parseAlg(process.argv[4], process.argv[6], jwt)
+    await parseAlg(process.argv[4], process.argv[6], jwt);
 
-    jwt.setKeyId(process.argv[8], (e) => {
-        if (e) console.log(`${e.code} ${e.message}`);
-    });
+    jwt.setKeyId(process.argv[8]);
 
-    if (process.argv.length == 10) {
+    if (process.argv.length === 10) {
       const config_arr = process.argv[9].split(",");
-      for (let i = 0; i < config_arr.length; i++){
+      for (let i = 0; i < config_arr.length; i++) {
         const term = config_arr[i].split("=");
-        
-        switch (term[0]){
+
+        switch (term[0]) {
           case "aud":
             jwt.setClaimAudience(term[1]);
             break;
@@ -81,90 +82,91 @@ async function main() {
           case "iat":
             jwt.setClaimIssuedAt(term[1]);
             break;
-      default:
-        console.log(`Invalid claim type passed in config: ${term[0]}`);
-        break;
-        
+          default:
+            console.log(`Invalid claim type passed in config: ${term[0]}`);
+            break;
+
         }
       }
     }
     await jwt.sign();
-	console.log("Encoded JWT: " + jwt.getEncodedJWT());
-  
-  } else if (process.argv[2] === "validate"){
-    jwt.reset();
+    console.log("Encoded JWT: " + jwt.getEncodedJWT());
+
+  } else if (process.argv[2] === "validate") {
+    await jwt.reset();
     await setSA(process.argv[4], process.argv[6], jwt);
     jwt.on("SignerInfo", (e) => (console.log(`alg=${e.algorithm}, kid=${e.keyId}`)))
-    .on("ClaimInfo", (e) => (console.log(`${e.name}=${e.value}`)));
-    
+      .on("ClaimInfo", (e) => (console.log(`${e.name}=${e.value}`)));
+
     jwt.setEncodedJWT(process.argv[8]);
 
-    await jwt.verify( (err) => {if (err) console.log(`${err.code} ${err.message}`)})
+    await jwt.verify();
   }
   process.exit(0);
 }
-function setSA(alg, key, token){
+
+async function setSA(alg, key, token) {
   switch (alg) {
     case "hs256":
       token.setSigningAlgorithm(0);
-    token.config("KeyEncoding=1"); //Base64
-    if(key === "0") {
-      key = key_256;
-    }
-      token.setKey(key, (e) => { if (e) console.log(`${e.code} ${e.message}`); })
+      token.config("KeyEncoding=1"); //Base64
+      if (key === "0") {
+        key = key_256;
+      }
+      token.setKey(key, (e) => { if (e) { console.log(`${e.code} ${e.message}`); } });
       break;
     case "hs384":
       token.setSigningAlgorithm(1);
-    token.config("KeyEncoding=1"); //Base64
-    if(key === "0") {
-      key = key_384;
-    }
-      token.setKey(key, (e) => { if (e) console.log(`${e.code} ${e.message}`); })
+      token.config("KeyEncoding=1"); //Base64
+      if (key === "0") {
+        key = key_384;
+      }
+      token.setKey(key, (e) => { if (e) { console.log(`${e.code} ${e.message}`); } });
       break;
     case "hs512":
       token.setSigningAlgorithm(2);
-    token.config("KeyEncoding=1"); //Base64
-    if(key === "0") {
-      key = key_512;
-    }
-      token.setKey(key, (e) => { if (e) console.log(`${e.code} ${e.message}`); })
+      token.config("KeyEncoding=1"); //Base64
+      if (key === "0") {
+        key = key_512;
+      }
+      token.setKey(key, (e) => { if (e) { console.log(`${e.code} ${e.message}`); } });
       break;
     case "rs256":
       token.setSigningAlgorithm(3);
       token.setSignerCert(new ipworksauth.Certificate(6, key, password, "*"));
-      break;   
+      break;
     case "rs384":
       token.setSigningAlgorithm(4);
       token.setSignerCert(new ipworksauth.Certificate(6, key, password, "*"));
-      break;   
+      break;
     case "rs512":
       token.setSigningAlgorithm(5);
       token.setSignerCert(new ipworksauth.Certificate(6, key, password, "*"));
-      break;   
+      break;
     case "es256":
       token.setSigningAlgorithm(6);
       token.setSignerCert(new ipworksauth.Certificate(8, key, "", "*"));
-      break;   
+      break;
     case "es384":
       token.setSigningAlgorithm(7);
       token.setSignerCert(new ipworksauth.Certificate(8, key, "", "*"));
 
-      break;   
+      break;
     case "es512":
       token.setSigningAlgorithm(8);
       token.setSignerCert(new ipworksauth.Certificate(8, key, "", "*"));
 
-      break;  
+      break;
     case "ps256":
       token.setSigningAlgorithm(9);
       token.setSignerCert(new ipworksauth.Certificate(6, key, password, "*"));
 
-      break;  
+      break;
     case "ps384":
       token.setSigningAlgorithm(10);
       token.setSignerCert(new ipworksauth.Certificate(6, key, password, "*"));
 
-      break;  
+      break;
     case "ps512":
       token.setSigningAlgorithm(11);
       token.setSignerCert(new ipworksauth.Certificate(6, key, password, "*"));
@@ -177,71 +179,71 @@ function setSA(alg, key, token){
   }
 }
 
-function parseAlg(alg, key, token) {
+async function parseAlg(alg, key, token) {
   switch (alg) {
     case "hs256":
-    token.config("KeyEncoding=1"); //Base64
-    if (key === "0") {
-      key = key_256;
-    }
-      token.setKey(key, (e) => { if (e) console.log(`${e.code} ${e.message}`); })
+      token.config("KeyEncoding=1"); //Base64
+      if (key === "0") {
+        key = key_256;
+      }
+      token.setKey(key, (e) => { if (e) { console.log(`${e.code} ${e.message}`); } });
       token.setSigningAlgorithm(0);
       break;
     case "hs384":
-    token.config("KeyEncoding=1"); //Base64
-    if (key === "0") {
-      key = key_384;
-    }
-      token.setKey(key, (e) => { if (e) console.log(`${e.code} ${e.message}`); })
-      token.setSigningAlgorithm(1);      
+      token.config("KeyEncoding=1"); //Base64
+      if (key === "0") {
+        key = key_384;
+      }
+      token.setKey(key, (e) => { if (e) { console.log(`${e.code} ${e.message}`); } });
+      token.setSigningAlgorithm(1);
       break;
     case "hs512":
-    token.config("KeyEncoding=1"); //Base64
-    if (key === "0") {
-      key = key_512;
-    }
-      token.setKey(key, (e) => { if (e) console.log(`${e.code} ${e.message}`); })
+      token.config("KeyEncoding=1"); //Base64
+      if (key === "0") {
+        key = key_512;
+      }
+      token.setKey(key, (e) => { if (e) { console.log(`${e.code} ${e.message}`); } });
       token.setSigningAlgorithm(2);
       break;
     case "rs256":
-      token.setSigningAlgorithm(3)
-      token.setCertificate(new ipworksauth.Certificate(2, key, password, "*"))
-      break;   
+      token.setSigningAlgorithm(3);
+      token.setCertificate(new ipworksauth.Certificate(2, key, password, "*"));
+      break;
     case "rs384":
-      token.setSigningAlgorithm(4)
-      token.setCertificate(new ipworksauth.Certificate(2, key, password, "*"))
-      break;   
+      token.setSigningAlgorithm(4);
+      token.setCertificate(new ipworksauth.Certificate(2, key, password, "*"));
+      break;
     case "rs512":
-      token.setSigningAlgorithm(5)
-      token.setCertificate(new ipworksauth.Certificate(2, key, password, "*"))
-      break;   
+      token.setSigningAlgorithm(5);
+      token.setCertificate(new ipworksauth.Certificate(2, key, password, "*"));
+      break;
     case "es256":
-      token.setSigningAlgorithm(6)
-      token.setCertificate(new ipworksauth.Certificate(6, key, "", "*"))
-      break;   
+      token.setSigningAlgorithm(6);
+      token.setCertificate(new ipworksauth.Certificate(6, key, "", "*"));
+      break;
     case "es384":
-      token.setSigningAlgorithm(7)
-      token.setCertificate(new ipworksauth.Certificate(6, key, "", "*"))
+      token.setSigningAlgorithm(7);
+      token.setCertificate(new ipworksauth.Certificate(6, key, "", "*"));
 
-      break;   
+      break;
     case "es512":
-      token.setSigningAlgorithm(8)
-      token.setCertificate(new ipworksauth.Certificate(6, key, "", "*"))
+      token.setSigningAlgorithm(8);
+      token.setCertificate(new ipworksauth.Certificate(6, key, "", "*"));
 
-      break;  
+      break;
     case "ps256":
-      token.setSigningAlgorithm(9)
-      token.setCertificate(new ipworksauth.Certificate(2, key, password, "*"))
+      token.setSigningAlgorithm(9);
+      token.setCertificate(new ipworksauth.Certificate(2, key, password, "*"));
 
-      break;  
+      break;
     case "ps384":
-      token.setSigningAlgorithm(10)
-      token.setCertificate(new ipworksauth.Certificate(2, key, password, "*"))
+      token.setSigningAlgorithm(10);
+      token.setCertificate(new ipworksauth.Certificate(2, key, password, "*"));
 
-      break;  
+      break;
     case "ps512":
-      token.setSigningAlgorithm(11)
-      token.setCertificate(new ipworksauth.Certificate(2, key, password, "*"))
+      token.setSigningAlgorithm(11);
+      token.setCertificate(new ipworksauth.Certificate(2, key, password, "*"));
 
       break;
     case "none":
@@ -251,7 +253,6 @@ function parseAlg(alg, key, token) {
       break;
   }
 }
-
 
 
 function prompt(promptName, label, punctuation, defaultVal)

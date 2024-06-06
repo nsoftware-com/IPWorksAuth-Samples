@@ -1,5 +1,5 @@
 /*
- * IPWorks Auth 2022 Java Edition - Sample Project
+ * IPWorks Auth 2024 Java Edition - Sample Project
  *
  * This sample project demonstrates the usage of IPWorks Auth in a 
  * simple, straightforward way. It is not intended to be a complete 
@@ -18,16 +18,16 @@ import ipworksauth.*;
 
 public class oauth extends ConsoleDemo {
 
-	private static Oauth oauth1 = null;
+	private static OAuth oauth1 = null;
 	
 	public static void main(String[] args) {
 		
 		try { 
-			oauth1 = new Oauth();
+			oauth1 = new OAuth();
 			
 			// Handle the LaunchBrowser event
-			oauth1.addOauthEventListener(new DefaultOauthEventListener() {
-				public void launchBrowser(OauthLaunchBrowserEvent event) {
+			oauth1.addOAuthEventListener(new DefaultOAuthEventListener() {
+				public void launchBrowser(OAuthLaunchBrowserEvent event) {
 					// Normally, the component will execute the command property to launch the browser for authorization.
 					// Setting the command to an empty string will prevent a browser from opening the URL. The following 
 					// line can be un-commented to exhibit this behavior.
@@ -67,10 +67,7 @@ public class oauth extends ConsoleDemo {
 			
 			System.out.println("\n3. The following URL will open in a web browser to authenticate to the\n"
 							+ "service. Upon successfully authenticating and allowing access, the user will\n"
-							+ "be redirected back to an embedded web server within the component.\n"
-							+ "The Authorization String will then be set to the 'Authorization' property\n"
-							+ "of the JSONS component and used to retrieve the user info for the authenticated\n"
-							+ "client.\n");
+							+ "be redirected back to an embedded web server within the component.\n");
 			oauth1.config("BrowserResponseTimeout=30");
 			String authString = oauth1.getAuthorization();
 			
@@ -112,15 +109,13 @@ class ConsoleDemo {
     System.out.print(label + punctuation + " ");
     return input();
   }
-
-  static String prompt(String label, String punctuation, String defaultVal)
-  {
-	System.out.print(label + " [" + defaultVal + "] " + punctuation + " ");
-	String response = input();
-	if(response.equals(""))
-		return defaultVal;
-	else
-		return response;
+  static String prompt(String label, String punctuation, String defaultVal) {
+      System.out.print(label + " [" + defaultVal + "] " + punctuation + " ");
+      String response = input();
+      if (response.equals(""))
+        return defaultVal;
+      else
+        return response;
   }
 
   static char ask(String label) {

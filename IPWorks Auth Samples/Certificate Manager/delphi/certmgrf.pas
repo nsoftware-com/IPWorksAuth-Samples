@@ -1,5 +1,5 @@
 (*
- * IPWorks Auth 2022 Delphi Edition - Sample Project
+ * IPWorks Auth 2024 Delphi Edition - Sample Project
  *
  * This sample project demonstrates the usage of IPWorks Auth in a 
  * simple, straightforward way. It is not intended to be a complete 
@@ -10,10 +10,6 @@
  * This code is subject to the terms and conditions specified in the 
  * corresponding product license agreement which outlines the authorized 
  * usage and restrictions.
- *)
-(*
- * IPWorks 2022 Delphi Edition - Demo Application
- * Copyright (c) 2022 /n software inc. - All rights reserved. - www.nsoftware.com
  *)
 unit certmgrf;
 
@@ -70,7 +66,7 @@ type
     A1: TMenuItem;
     CreateKey1: TMenuItem;
     lPFXPassword: TLabel;
-    ipwCertMgr1: TipaCertMgr;
+    ipaCertMgr1: TipaCertMgr;
     procedure pgCertsAndKeysChange(Sender: TObject);
     procedure Refresh1Click(Sender: TObject);
     procedure FormActivate(Sender: TObject);
@@ -93,8 +89,8 @@ type
     procedure ImportCertificate1Click(Sender: TObject);
     procedure ImportSignedCSR1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
-    procedure ipwCertMgr1StoreList(Sender: TObject; const CertStore: string);
-    procedure ipwCertMgr1KeyList(Sender: TObject; const KeyContainer: string;
+    procedure ipaCertMgr1StoreList(Sender: TObject; const CertStore: string);
+    procedure ipaCertMgr1KeyList(Sender: TObject; const KeyContainer: string;
       KeyType: Integer; const AlgId: string; KeyLen: Integer);
     procedure ipaCertMgr1CertList(Sender: TObject; CertEncoded: string; CertEncodedB: TArray<System.Byte>;
       const CertSubject, CertIssuer, CertSerialNumber: string;
@@ -118,7 +114,7 @@ implementation
 
 {$R *.dfm}
 
-procedure TFormCertmgr.ipwCertMgr1StoreList(Sender: TObject;
+procedure TFormCertmgr.ipaCertMgr1StoreList(Sender: TObject;
   const CertStore: String);
 begin
   if pgCertsAndKeys.ActivePage = tabUserStores then
@@ -134,22 +130,22 @@ begin
   if pgCertsAndKeys.ActivePage = tabUserStores then begin
     tvUserStores.Items[0].DeleteChildren;
     lvUserCerts.Items.Clear();
-    ipwCertMgr1.ListCertificateStores;
+    ipaCertMgr1.ListCertificateStores;
     tvUserStores.Items[0].Expand(true);
   end;
 
   if pgCertsAndKeys.ActivePage = tabMachineStores then begin
     tvMachineStores.Items[0].DeleteChildren;
     lvMachineCerts.Items.Clear();
-    ipwCertMgr1.ListMachineStores;
+    ipaCertMgr1.ListMachineStores;
     tvMachineStores.Items[0].Expand(true);
   end;
 
   if pgCertsAndKeys.ActivePage = tabKeys then begin
     lvCertInfo.Enabled := false;
     lvKeys.Items.Clear();
-    ipwCertMgr1.CertStoreType := cstUser;
-    ipwCertMgr1.ListKeys;
+    ipaCertMgr1.CertStoreType := cstUser;
+    ipaCertMgr1.ListKeys;
   end;
 end;
 
@@ -177,7 +173,7 @@ begin
   
   listItem := listView.Items.Add;
   listItem.Caption := CertSubject;
-  listItem.SubItems.Add(ipwCertMgr1.CertStore);
+  listItem.SubItems.Add(ipaCertMgr1.CertStore);
   listItem.SubItems.Add(CertEncoded);
 
 end;
@@ -186,9 +182,9 @@ procedure TFormCertmgr.tvUserStoresChange(Sender: TObject; Node: TTreeNode);
 begin
   lvUserCerts.Items.Clear();
   if tvUserStores.Selected.Parent = nil then exit;
-  ipwCertMgr1.CertStoreType := cstUser;
-  ipwCertMgr1.CertStore := tvUserStores.Selected.Text;
-  ipwCertMgr1.ListStoreCertificates;
+  ipaCertMgr1.CertStoreType := cstUser;
+  ipaCertMgr1.CertStore := tvUserStores.Selected.Text;
+  ipaCertMgr1.ListStoreCertificates;
   if lvUserCerts.Items.Count> 0 then lvUserCerts.Items.Item[0].Selected := true;
 end;
 
@@ -196,18 +192,18 @@ procedure TFormCertmgr.tvMachineStoresChange(Sender: TObject; Node: TTreeNode);
 begin
   lvMachineCerts.Items.Clear();
   if tvMachineStores.Selected.Parent = nil then exit;
-  ipwCertMgr1.CertStoreType := cstMachine;
-  ipwCertMgr1.CertStore := tvMachineStores.Selected.Text;
-  ipwCertMgr1.ListStoreCertificates;
+  ipaCertMgr1.CertStoreType := cstMachine;
+  ipaCertMgr1.CertStore := tvMachineStores.Selected.Text;
+  ipaCertMgr1.ListStoreCertificates;
   if lvMachineCerts.Items.Count> 0 then lvMachineCerts.Items.Item[0].Selected := true;
 end;
 
 procedure TFormCertmgr.lvUserCertsClick(Sender: TObject);
 begin
   if lvUserCerts.SelCount > 0 then begin
-          ipwCertMgr1.CertStoreType := cstUser;
-          ipwCertMgr1.CertStore := lvUserCerts.Selected.SubItems[0];
-          ipwCertMgr1.CertSubject := lvUserCerts.Selected.Caption;
+          ipaCertMgr1.CertStoreType := cstUser;
+          ipaCertMgr1.CertStore := lvUserCerts.Selected.SubItems[0];
+          ipaCertMgr1.CertSubject := lvUserCerts.Selected.Caption;
           ShowCertInfo;
   end;
 end;
@@ -215,9 +211,9 @@ end;
 procedure TFormCertmgr.lvMachineCertsClick(Sender: TObject);
 begin
   if lvMachineCerts.SelCount > 0 then begin
-        ipwCertMgr1.CertStoreType := cstMachine;
-        ipwCertMgr1.CertStore := lvMachineCerts.Selected.SubItems[0];
-        ipwCertMgr1.CertSubject := lvUserCerts.Selected.Caption;
+        ipaCertMgr1.CertStoreType := cstMachine;
+        ipaCertMgr1.CertStore := lvMachineCerts.Selected.SubItems[0];
+        ipaCertMgr1.CertSubject := lvUserCerts.Selected.Caption;
         ShowCertInfo;
         end;
 end;
@@ -231,50 +227,50 @@ begin
 
 	listItem := lvCertInfo.Items.Add;
 	listItem.Caption := 'Subject';
-	listItem.SubItems.Add(ipwCertMgr1.CertSubject);
+	listItem.SubItems.Add(ipaCertMgr1.CertSubject);
 
 	listItem := lvCertInfo.Items.Add;
 	listItem.Caption := 'Issuer';
-	listItem.SubItems.Add(ipwCertMgr1.CertIssuer);
+	listItem.SubItems.Add(ipaCertMgr1.CertIssuer);
 
 	listItem := lvCertInfo.Items.Add;
 	listItem.Caption := 'Version';
-	listItem.SubItems.Add(ipwCertMgr1.CertVersion);
+	listItem.SubItems.Add(ipaCertMgr1.CertVersion);
 
 	listItem := lvCertInfo.Items.Add;
 	listItem.Caption := 'Serial Number';
-	listItem.SubItems.Add(ipwCertMgr1.CertSerialNumber);
+	listItem.SubItems.Add(ipaCertMgr1.CertSerialNumber);
 
 	listItem := lvCertInfo.Items.Add;
 	listItem.Caption := 'Signature Algorithm';
-	listItem.SubItems.Add(ipwCertMgr1.CertSignatureAlgorithm);
+	listItem.SubItems.Add(ipaCertMgr1.CertSignatureAlgorithm);
 
 	listItem := lvCertInfo.Items.Add;
 	listItem.Caption := 'Effective Date';
-	listItem.SubItems.Add(ipwCertMgr1.CertEffectiveDate);
+	listItem.SubItems.Add(ipaCertMgr1.CertEffectiveDate);
 
 	listItem := lvCertInfo.Items.Add;
 	listItem.Caption := 'Expiration Date';
-	listItem.SubItems.Add(ipwCertMgr1.CertExpirationDate);
-	
+	listItem.SubItems.Add(ipaCertMgr1.CertExpirationDate);
+
 	listItem := lvCertInfo.Items.Add;
 	listItem.Caption := 'Public Key Algorithm';
-	listItem.SubItems.Add(ipwCertMgr1.CertPublicKeyAlgorithm);
-	
+	listItem.SubItems.Add(ipaCertMgr1.CertPublicKeyAlgorithm);
+
 	listItem := lvCertInfo.Items.Add;
 	listItem.Caption := 'Public Key Length';
-	listItem.SubItems.Add(IntToStr(ipwCertMgr1.CertPublicKeyLength));
-	
+	listItem.SubItems.Add(IntToStr(ipaCertMgr1.CertPublicKeyLength));
+
 	listItem := lvCertInfo.Items.Add;
 	listItem.Caption := 'Public Key';
-	listItem.SubItems.Add(ipwCertMgr1.CertPublicKey);
+	listItem.SubItems.Add(ipaCertMgr1.CertPublicKey);
 
-  if ipwCertMgr1.CertPrivateKeyAvailable then
+  if ipaCertMgr1.CertPrivateKeyAvailable then
     spStatus.SimpleText := '* You have a private key that is associated with this certificate.';
 
 end;
 
-procedure TFormCertmgr.ipwCertMgr1KeyList(Sender: TObject;
+procedure TFormCertmgr.ipaCertMgr1KeyList(Sender: TObject;
   const KeyContainer: String; KeyType: Integer; const AlgId: String;
   KeyLen: Integer);
 var
@@ -300,24 +296,24 @@ procedure TFormCertmgr.btnLoadPFXClick(Sender: TObject);
 begin
   if tPFXFile.Text = '' then btnBrowsePFXClick(Sender);
   lvPFXCerts.Items.Clear();
-  ipwCertMgr1.CertStoreType := cstPFXFile;
+  ipaCertMgr1.CertStoreType := cstPFXFile;
   lPFXPassword.Caption := InputBox('PFX File Password', 'Please enter the PFX file password:', '');
-  ipwCertMgr1.CertStorePassword := lPFXPassword.Caption;
-  ipwCertMgr1.CertStore := tPFXFile.Text;
-  ipwCertMgr1.ListStoreCertificates;
+  ipaCertMgr1.CertStorePassword := lPFXPassword.Caption;
+  ipaCertMgr1.CertStore := tPFXFile.Text;
+  ipaCertMgr1.ListStoreCertificates;
 end;
 
 procedure TFormCertmgr.lvPFXCertsClick(Sender: TObject);
 begin
   if lvPFXCerts.SelCount > 0 then begin
-        ipwCertMgr1.CertSubject := lvPFXCerts.Selected.Caption;
+        ipaCertMgr1.CertSubject := lvPFXCerts.Selected.Caption;
         ShowCertInfo;
         end;
 end;
 
 procedure TFormCertmgr.A1Click(Sender: TObject);
 begin
-  ShowMessage('IPWorks Certificate Manager');
+  ShowMessage('IPWorks Auth Certificate Manager');
 end;
 
 procedure TFormCertmgr.CreateSelfSignedCertificate1Click(Sender: TObject);
@@ -347,7 +343,7 @@ var
   keyName: string;
 begin
   keyName := InputBox('Create Key', 'Please enter key name:', '');
-  if keyName <> '' then ipwCertMgr1.CreateKey(keyName);
+  if keyName <> '' then ipaCertMgr1.CreateKey(keyName);
   pgCertsAndKeys.ActivePage := tabKeys;
   pgCertsAndKeysChange(Nil);
 end;
@@ -371,7 +367,7 @@ begin
     exit;
   end;
 
-  ipwCertMgr1.ExportCertificate(dlgOpen.FileName, password);
+  ipaCertMgr1.ExportCertificate(dlgOpen.FileName, password);
   ShowMessage('Certificate exported to: ' + dlgOpen.FileName);
 end;
 
@@ -384,25 +380,25 @@ end;
 function TFormCertmgr.SelectCert: boolean;
 begin
   SelectCert := false;
-  ipwCertMgr1.Reset;
+  ipaCertMgr1.Reset;
   
   if pgCertsAndKeys.ActivePage = tabUserStores then begin
-    ipwCertMgr1.CertStoreType := cstUser;
+    ipaCertMgr1.CertStoreType := cstUser;
     if lvUserCerts.SelCount > 0 then begin
-      ipwCertMgr1.CertStore := tvUserStores.Selected.Text;
-      ipwCertMgr1.CertSubject := lvUserCerts.Selected.Caption;
+      ipaCertMgr1.CertStore := tvUserStores.Selected.Text;
+      ipaCertMgr1.CertSubject := lvUserCerts.Selected.Caption;
     end;
   end;
 
   if pgCertsAndKeys.ActivePage = tabMachineStores then begin
-    ipwCertMgr1.CertStoreType := cstMachine;
+    ipaCertMgr1.CertStoreType := cstMachine;
     if lvMachineCerts.SelCount > 0 then begin
-      ipwCertMgr1.CertStore := tvMachineStores.Selected.Text;
-      ipwCertMgr1.CertSubject := lvUserCerts.Selected.Caption;
+      ipaCertMgr1.CertStore := tvMachineStores.Selected.Text;
+      ipaCertMgr1.CertSubject := lvUserCerts.Selected.Caption;
     end;
   end;
 
-  if ipwCertMgr1.CertSubject = '' then begin
+  if ipaCertMgr1.CertSubject = '' then begin
     ShowMessage('Please select a certificate in a User or Machine store first.');
     exit;
   end;
@@ -415,8 +411,8 @@ begin
   if not SelectCert then exit;
 
   if MessageDlg('Are you sure you want to delete the certificate with subject: ' +
-                 ipwCertMgr1.CertSubject + '?', mtConfirmation, [mbYes, mbNo], 0) = mrYes then begin
-    ipwCertMgr1.DeleteCertificate;
+                 ipaCertMgr1.CertSubject + '?', mtConfirmation, [mbYes, mbNo], 0) = mrYes then begin
+    ipaCertMgr1.DeleteCertificate;
   end;
 
   if pgCertsAndKeys.ActivePage = tabUserStores then tvUserStoresChange(Sender, nil);
@@ -433,9 +429,9 @@ begin
   end;
 
   //this imports into the 'MY' store, but any other store would work as well
-  ipwCertMgr1.CertStoreType := cstUser;
-  ipwCertMgr1.CertStore := 'MY';
-  ipwCertMgr1.ImportCertificate(tPFXFile.Text, lPFXPassword.Caption, lvPFXCerts.Selected.Caption);
+  ipaCertMgr1.CertStoreType := cstUser;
+  ipaCertMgr1.CertStore := 'MY';
+  ipaCertMgr1.ImportCertificate(tPFXFile.Text, lPFXPassword.Caption, lvPFXCerts.Selected.Caption);
   pgCertsAndKeys.ActivePage := tabUserStores;
   Refresh1Click(nil);
   
@@ -456,5 +452,6 @@ begin
 end;
 
 end.
+
 
 

@@ -12,13 +12,12 @@ object FormImportcsr: TFormImportcsr
   Font.Height = -11
   Font.Name = 'MS Sans Serif'
   Font.Style = []
-  OldCreateOrder = False
   Position = poOwnerFormCenter
   OnActivate = FormActivate
+  PixelsPerInch = 96
   DesignSize = (
     434
     254)
-  PixelsPerInch = 96
   TextHeight = 13
   object Label4: TLabel
     Left = 8
@@ -80,10 +79,11 @@ object FormImportcsr: TFormImportcsr
     DropDownCount = 12
     TabOrder = 3
   end
-  object ipwCertMgr1: TipwCertMgr
+  object ipaCertMgr1: TipaCertMgr
     CertStore = 'MY'
-    OnKeyList = ipwCertMgr1KeyList
-    Left = 392
+    ExportFormat = 'PFX'
+    OnKeyList = ipaCertMgr1KeyList
+    Left = 400
     Top = 24
   end
 end

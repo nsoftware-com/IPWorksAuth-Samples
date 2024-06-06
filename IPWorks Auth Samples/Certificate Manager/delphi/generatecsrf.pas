@@ -16,12 +16,12 @@ type
     Label1: TLabel;
     Label2: TLabel;
     cbKey: TComboBox;
-    ipwCertMgr1: TipaCertMgr;
+    ipaCertMgr1: TipaCertMgr;
     procedure bSignClick(Sender: TObject);
     procedure bOKClick(Sender: TObject);
     procedure FormActivate(Sender: TObject);
-    procedure ipwCertMgr1KeyList(Sender: TObject; const KeyContainer: string;
-      KeyType: Integer; const AlgId: string; KeyLen: Integer);
+    procedure ipaCertMgr1KeyList(Sender: TObject; const KeyContainer: string;
+      const KeyType: Integer; const AlgId: string; const KeyLen: Integer);
   private
     { Private declarations }
   public
@@ -43,13 +43,13 @@ begin
     exit;
   end;
 
-  tCSR.Text := ipwCertMgr1.generatecsr(tSubject.Text, cbKey.Text);
+  tCSR.Text := ipaCertMgr1.generatecsr(tSubject.Text, cbKey.Text);
 
 end;
 
-procedure TFormGeneratecsr.ipwCertMgr1KeyList(Sender: TObject;
-  const KeyContainer: String; KeyType: Integer; const AlgId: String;
-  KeyLen: Integer);
+procedure TFormGeneratecsr.ipaCertMgr1KeyList(Sender: TObject;
+  const KeyContainer: string; const KeyType: Integer; const AlgId: string;
+  const KeyLen: Integer);
 begin
   cbKey.Items.Add(KeyContainer);
 end;
@@ -62,7 +62,7 @@ end;
 procedure TFormGeneratecsr.FormActivate(Sender: TObject);
 begin
   cbKey.Items.Clear;
-  ipwCertMgr1.ListKeys;
+  ipaCertMgr1.ListKeys;
   cbKey.ItemIndex := 0;
 end;
 

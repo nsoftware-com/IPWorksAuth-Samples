@@ -12,13 +12,12 @@ object FormSigncsr: TFormSigncsr
   Font.Height = -11
   Font.Name = 'MS Sans Serif'
   Font.Style = []
-  OldCreateOrder = False
   Position = poOwnerFormCenter
   OnActivate = FormActivate
+  PixelsPerInch = 96
   DesignSize = (
     444
     500)
-  PixelsPerInch = 96
   TextHeight = 13
   object Label1: TLabel
     Left = 8
@@ -127,10 +126,11 @@ object FormSigncsr: TFormSigncsr
     Text = '0'
     OnChange = tSerialNumberChange
   end
-  object ipwCertMgr1: TipwCertMgr
+  object ipaCertMgr1: TipaCertMgr
     CertStore = 'MY'
-    OnCertList = ipwCertMgr1CertList
-    Left = 256
+    ExportFormat = 'PFX'
+    OnCertList = ipaCertMgr1CertList
+    Left = 304
     Top = 248
   end
 end

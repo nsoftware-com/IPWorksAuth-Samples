@@ -19,13 +19,13 @@ type
     bOK: TButton;
     bCancel: TButton;
     tSerialNumber: TEdit;
-    ipwCertMgr1: TipaCertMgr;
+    ipaCertMgr1: TipaCertMgr;
     procedure bCancelClick(Sender: TObject);
     procedure bOKClick(Sender: TObject);
     procedure FormActivate(Sender: TObject);
-    procedure ipwCertMgr1CertList(Sender: TObject; CertEncoded: string; CertEncodedB: TArray<System.Byte>;
-      const CertSubject, CertIssuer, CertSerialNumber: string;
-      HasPrivateKey: Boolean);
+    procedure ipaCertMgr1CertList(Sender: TObject; const CertEncoded: string;
+      const CertEncodedB: TArray<System.Byte>; const CertSubject, CertIssuer,
+      CertSerialNumber: string; const HasPrivateKey: Boolean);
   private
     { Private declarations }
   public
@@ -39,9 +39,10 @@ implementation
 
 {$R *.dfm}
 
-procedure TFormCreatecert.ipwCertMgr1CertList(Sender: TObject;
-  CertEncoded: string; CertEncodedB: TArray<System.Byte>; const CertSubject, CertIssuer,
-  CertSerialNumber: String; HasPrivateKey: Boolean);
+procedure TFormCreatecert.ipaCertMgr1CertList(Sender: TObject;
+  const CertEncoded: string; const CertEncodedB: TArray<System.Byte>;
+  const CertSubject, CertIssuer, CertSerialNumber: string;
+  const HasPrivateKey: Boolean);
 begin
   if HasPrivateKey then cbIssuer.Items.Add(CertSubject);
 end;
@@ -60,12 +61,12 @@ begin
   end;
   
   if rbSelfSigned.Checked then begin
-    ipwCertMgr1.createcertificate(tSubject.Text, StrToInt(tSerialNumber.Text));
+    ipaCertMgr1.createcertificate(tSubject.Text, StrToInt(tSerialNumber.Text));
   end;
-  
+
   if rbSigned.Checked then begin
-    ipwCertMgr1.CertSubject := cbIssuer.Text;
-    ipwCertMgr1.IssueCertificate(tSubject.Text, StrToInt(tSerialNumber.Text));
+    ipaCertMgr1.CertSubject := cbIssuer.Text;
+    ipaCertMgr1.IssueCertificate(tSubject.Text, StrToInt(tSerialNumber.Text));
   end;
 
   ShowMessage('Certificate created and inserted in the store.');
@@ -78,7 +79,7 @@ procedure TFormCreatecert.FormActivate(Sender: TObject);
 begin
   tSerialNumber.Text := IntToStr(StrToInt(tSerialNumber.Text) + 1);
   cbIssuer.items.Clear;
-  ipwCertMgr1.ListStoreCertificates;
+  ipaCertMgr1.ListStoreCertificates;
   if cbIssuer.Items.Count > 0 then cbIssuer.Text := cbIssuer.Items[1];
 end;
 

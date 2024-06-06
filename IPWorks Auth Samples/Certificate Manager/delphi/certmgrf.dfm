@@ -11,14 +11,13 @@ object FormCertmgr: TFormCertmgr
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   Menu = MainMenu1
-  OldCreateOrder = False
   Position = poScreenCenter
   OnActivate = FormActivate
   OnCreate = FormCreate
+  PixelsPerInch = 96
   DesignSize = (
     782
     440)
-  PixelsPerInch = 96
   TextHeight = 13
   object GroupBox1: TGroupBox
     Left = 8
@@ -374,13 +373,13 @@ object FormCertmgr: TFormCertmgr
     Filter = '*.pfx'
     Left = 488
   end
-  object ipwCertMgr1: TipwCertMgr
+  object ipaCertMgr1: TipaCertMgr
     CertStore = 'MY'
-    OnCertList = ipwCertMgr1CertList
-    OnKeyList = ipwCertMgr1KeyList
-    OnStoreList = ipwCertMgr1StoreList
-    Left = 613
-    Top = 16
+    ExportFormat = 'PFX'
+    OnCertList = ipaCertMgr1CertList
+    OnKeyList = ipaCertMgr1KeyList
+    OnStoreList = ipaCertMgr1StoreList
+    Left = 568
   end
 end
 

@@ -1,5 +1,5 @@
 /*
- * IPWorks Auth 2022 Java Edition - Sample Project
+ * IPWorks Auth 2024 Java Edition - Sample Project
  *
  * This sample project demonstrates the usage of IPWorks Auth in a 
  * simple, straightforward way. It is not intended to be a complete 
@@ -21,12 +21,12 @@ import java.util.Base64;
 import java.util.TooManyListenersException;
 import ipworksauth.Certificate;
 import ipworksauth.IPWorksAuthException;
-import ipworksauth.JwtHeaderParamEvent;
-import ipworksauth.JwtRecipientInfoEvent;
-import ipworksauth.JwtSignerInfoEvent;
-import ipworksauth.JwtClaimInfoEvent;
-import ipworksauth.JwtErrorEvent;
-import ipworksauth.Jwt;
+import ipworksauth.JWTHeaderParamEvent;
+import ipworksauth.JWTRecipientInfoEvent;
+import ipworksauth.JWTSignerInfoEvent;
+import ipworksauth.JWTClaimInfoEvent;
+import ipworksauth.JWTErrorEvent;
+import ipworksauth.JWT;
 
 public class jwt extends ConsoleDemo{
 	
@@ -53,7 +53,7 @@ public class jwt extends ConsoleDemo{
 
 	}
 	
-	private static void parseMessageIntoJwt(String message, ipworksauth.Jwt token){
+	private static void parseMessageIntoJWT(String message, ipworksauth.JWT token){
 		String[] args_msg = message.split(",");
 		
 		for (int i = 0; i < args_msg.length; i++){
@@ -92,9 +92,9 @@ public class jwt extends ConsoleDemo{
 	private static void sign(String alg, String key, String message, String password) {
 
 		try {
-			ipworksauth.Jwt jwt = new ipworksauth.Jwt();
+			ipworksauth.JWT jwt = new ipworksauth.JWT();
 			
-			parseMessageIntoJwt(message, jwt);
+			parseMessageIntoJWT(message, jwt);
 			switch (alg) {
 			case "HS256":
 				jwt.setSigningAlgorithm(jwt.saHS256);
@@ -159,25 +159,25 @@ public class jwt extends ConsoleDemo{
 
 
 	private static void verify(String alg, String key, String signed) {
-		ipworksauth.Jwt jwt = new ipworksauth.Jwt();
+		ipworksauth.JWT jwt = new ipworksauth.JWT();
 		try {
-			jwt.addJwtEventListener(new ipworksauth.JwtEventListener(){
+			jwt.addJWTEventListener(new ipworksauth.JWTEventListener(){
 				@Override
-				public void headerParam(ipworksauth.JwtHeaderParamEvent e){
+				public void headerParam(ipworksauth.JWTHeaderParamEvent e){
 					System.out.println("\"" + e.name + "\"=\"" + e.value + "\"");
 				}
 				@Override
-				public void claimInfo(ipworksauth.JwtClaimInfoEvent e){
+				public void claimInfo(ipworksauth.JWTClaimInfoEvent e){
 					System.out.println("\"" + e.name + "\"=\"" + e.value + "\"");
 				}
 				@Override
-				public void error(JwtErrorEvent arg0) {					
+				public void error(JWTErrorEvent arg0) {					
 				}
 				@Override
-				public void recipientInfo(JwtRecipientInfoEvent arg0) {					
+				public void recipientInfo(JWTRecipientInfoEvent arg0) {					
 				}
 				@Override
-				public void signerInfo(JwtSignerInfoEvent arg0) {					
+				public void signerInfo(JWTSignerInfoEvent arg0) {					
 				}
 			});
 		} catch (TooManyListenersException e) {
@@ -270,15 +270,13 @@ class ConsoleDemo {
     System.out.print(label + punctuation + " ");
     return input();
   }
-
-  static String prompt(String label, String punctuation, String defaultVal)
-  {
-	System.out.print(label + " [" + defaultVal + "] " + punctuation + " ");
-	String response = input();
-	if(response.equals(""))
-		return defaultVal;
-	else
-		return response;
+  static String prompt(String label, String punctuation, String defaultVal) {
+      System.out.print(label + " [" + defaultVal + "] " + punctuation + " ");
+      String response = input();
+      if (response.equals(""))
+        return defaultVal;
+      else
+        return response;
   }
 
   static char ask(String label) {
