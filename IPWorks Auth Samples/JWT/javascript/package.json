@@ -8,7 +8,7 @@
   "main": "jwt.js",
   "dependencies": {
     "full-icu": "*",
-    "ipworksauth": "^24.0.8923"
+    "ipworksauth": "^24.0.8935"
   },
   "scripts": {
     "jwt": "node jwt.js"
