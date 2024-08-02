@@ -7,7 +7,5 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="oauth.cs" />
-    <Reference Include="nsoftware.IPWorksAuth">
-      <HintPath>..\..\lib\net6.0\nsoftware.IPWorksAuth.dll</HintPath>
-    </Reference>
+    <PackageReference Include="nsoftware.IPWorksAuth" Version="24.*" />
   </ItemGroup></Project>
